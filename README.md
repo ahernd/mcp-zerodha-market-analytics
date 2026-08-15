@@ -48,21 +48,21 @@ Once connected, you can simply ask Claude things like *"analyze my portfolio"* o
 
 ```mermaid
 flowchart LR
-    A[Zerodha Kite<br/>Trading Account] -->|Official Kite MCP Server<br/>mcp.kite.trade| B[MCP<br/>Model Context Protocol]
-    B --> C[Claude Desktop]
-    B -.-> D[Cursor]
-    B -.-> E[Windsurf]
+    A[Zerodha's Backend<br/>Trading Data & Kite Connect API] --> B[mcp.kite.trade<br/>Official Kite MCP Server<br/>hosted by Zerodha]
+    B <-->|speaks MCP protocol| C[Claude Desktop<br/>MCP Client]
+    B <-.->|speaks MCP protocol| D[Cursor<br/>MCP Client]
+    B <-.->|speaks MCP protocol| E[Windsurf<br/>MCP Client]
 
     C -->|Live holdings, quotes,<br/>historical data| F[Your Prompt:<br/>'Analyze my portfolio']
     F --> G[AI-Generated Analysis:<br/>P&L, technicals, sector mix]
 
     style A fill:#FF6600,color:#fff
-    style B fill:#000000,color:#fff
+    style B fill:#FF6600,color:#fff
     style C fill:#DA7756,color:#fff
     style G fill:#2E7D32,color:#fff
 ```
 
-MCP acts as the universal connector — the same Kite MCP server that plugs into Claude can plug into other MCP-compatible AI tools (Cursor, Windsurf, etc.), but this guide focuses on **Claude Desktop**.
+**How to read this:** The two Zerodha-owned boxes on the left ("Zerodha's Backend" and "mcp.kite.trade") are both Zerodha's own infrastructure — the backend holds the raw trading data, and `mcp.kite.trade` is the specific server Zerodha built and hosts to expose that data using the **MCP protocol**. MCP itself isn't a separate service data passes *through* — it's the shared language that lets any compatible AI client (Claude, Cursor, Windsurf) talk to that server directly, the same way HTTP is the language browsers use to talk to websites. This guide sets up the connection between the Kite MCP Server and Claude Desktop; the dashed lines to Cursor and Windsurf just show the same server works with other MCP clients too, if you use them.
 
 ## Prerequisites
 
